@@ -1,0 +1,17 @@
+.allDiv{
+    padding: 20px;
+}
+
+.buttons{
+    display: flex;
+    gap: 5px;
+    margin: 20px 0 15px 10px;
+}
+
+.allP{
+    margin-top: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 16px;
+}
