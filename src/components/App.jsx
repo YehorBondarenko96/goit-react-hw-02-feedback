@@ -1,18 +1,25 @@
+import { Component } from "react";
 import { Statistics } from "./Statistics/Statistics";
 
-export const App = () => {
+export class App  extends Component {
+    state = {
+        good: 0,
+        neutral: 0,
+        bad: 0
+        };
+
+        updateState = (evt) => {
+          const variable = evt.currentTarget.textContent.toLowerCase();
+          this.setState((state) => ({[variable]: state[variable] + 1}))
+      }; 
+
+render(){
+
   return (
-    <div
-      style={{
-        height: '100%',
-        display: 'flex',
-        flexDirection: "column",
-        justifyContent: 'center',
-        fontSize: 20,
-        color: '#010101'
-      }}
-    >
-      <Statistics/>
-    </div>
-  );
+      <Statistics
+        feedback={this.state} 
+        updateState={this.updateState}
+      />
+  )
+}
 };

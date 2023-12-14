@@ -1,27 +1,33 @@
 import { Component } from "react";
 import css from "../Styles.module.css";
+import { FeedbackOptions } from "components/Buttons/FeedbackOptions";
+import { Section } from "components/ItemStatistics/Section";
+import { Notification } from "components/Notification/Notification";
 
 export class Statistics extends Component {
     state = {
-        good: 0,
-        neutral: 0,
-        bad: 0
-        };
+    feedback: this.props.feedback
+    };
 
-    plusValue = (evt) => {
-        const variable = evt.currentTarget.textContent.toLowerCase()
-        this.setState((state) => ({[variable]: state[variable] + 1}))
-    };    
+    componentDidUpdate(prevProps) {
+        if (prevProps.feedback !== this.props.feedback) {
+            this.setState({ feedback: this.props.feedback });
+        }
+    };
+
+    updateFeedback = (evt) => {
+        this.props.updateState(evt)
+    };
 
     countTotalFeedback = () => {
         return (
-            this.state.good + this.state.neutral + this.state.bad
+            this.state.feedback.good + this.state.feedback.neutral + this.state.feedback.bad
         )
     };
 
     countPositiveFeedbackPercentage = () => {
         return (
-            Math.round((this.state.good/[this.countTotalFeedback()])*100)
+            Math.round((this.state.feedback.good/[this.countTotalFeedback()])*100)
         )
     };
 
@@ -30,19 +36,19 @@ export class Statistics extends Component {
         return (
             <div className={css.allDiv}>
             <h2>Please leave feedback</h2>
-            <div className={css.buttons}>
-            <button type="button" onClick={this.plusValue}>Good</button>
-            <button type="button" onClick={this.plusValue}>Neutral</button>
-            <button type="button" onClick={this.plusValue}>Bad</button>
-            </div>
+            <FeedbackOptions updateFeedback={this.updateFeedback}/>
             <h2>Statistics</h2>
             <div className={css.allP}>
-            <p>Good:<span>{this.state.good}</span></p>
-            <p>Neutral:<span>{this.state.neutral}</span></p>
-            <p>Bad:<span>{this.state.bad}</span></p>
-            <p>Total: <span>{this.countTotalFeedback()}</span></p>
-            <p>Positive feedback: <span>{this.countPositiveFeedbackPercentage()}%</span></p>
-            </div>
+            {this.countTotalFeedback() > 0 
+                ? <>
+                <Section title="Good" value={this.state.feedback.good}/>
+                <Section title="Neutral" value={this.state.feedback.neutral}/>
+                <Section title="Bad" value={this.state.feedback.bad}/>
+                <Section title="Total" value={this.countTotalFeedback()}/>
+                <Section title="Positive feedback" value={`${this.countPositiveFeedbackPercentage()}%`}/>
+                </>
+                : <Notification message="No feedback given"/>}
+                </div>
             </div>
         )
     }
