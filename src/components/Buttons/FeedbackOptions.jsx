@@ -1,11 +1,13 @@
 import css from '../Styles.module.css';
 
-export const FeedbackOptions = ({updateFeedback}) => {
+export const FeedbackOptions = ({options, onLeaveFeedback}) => {
     return(
         <div className={css.buttons}>
-            <button type="button" onClick={updateFeedback}>Good</button>
-            <button type="button" onClick={updateFeedback}>Neutral</button>
-            <button type="button" onClick={updateFeedback}>Bad</button>
-            </div>
+            {options.map(option => (
+                <button key={option} type="button" onClick={onLeaveFeedback}>
+                    {option.charAt(0).toUpperCase() + option.slice(1)}
+                </button>
+            ))}
+        </div>
     )
 };
