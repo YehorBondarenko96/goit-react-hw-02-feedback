@@ -1,6 +1,7 @@
 import { Component } from "react";
 import { Statistics } from "./Statistics/Statistics";
 import { FeedbackOptions } from "./Buttons/FeedbackOptions";
+import { Section } from "./Section/Section";
 import css from './Styles.module.css';
 
 export class App  extends Component {
@@ -11,8 +12,8 @@ export class App  extends Component {
         };
 
     updateState = (evt) => {
-          const variable = evt.currentTarget.textContent.toLowerCase();
-          this.setState((state) => ({[variable]: state[variable] + 1}))
+        const variable = evt.currentTarget.textContent.toLowerCase();
+        this.setState((state) => ({[variable]: state[variable] + 1}))
     }; 
 
     countTotalFeedback = () => {
@@ -34,22 +35,25 @@ render(){
     const positivePercentage = this.countPositiveFeedbackPercentage();
     const options = Object.keys(this.state)
 
-  return (
+    return (
     <div className={css.allDiv}>
-        <h2>Please leave feedback</h2>
-        <FeedbackOptions 
-        options={options} 
-        onLeaveFeedback={this.updateState}
-        />
-        <h2>Statistics</h2>
-        <Statistics
-        good={good} 
-        neutral={neutral} 
-        bad={bad} 
-        total={total} 
-        positivePercentage={positivePercentage}
-      />
+        <Section title="Please leave feedback">
+            <FeedbackOptions 
+            options={options} 
+            onLeaveFeedback={this.updateState}
+            />
+        </Section>
+
+        <Section title="Statistics">
+            <Statistics
+            good={good} 
+            neutral={neutral} 
+            bad={bad} 
+            total={total} 
+            positivePercentage={positivePercentage}
+            />
+        </Section>
         </div>
-  )
+    )
 }
 };

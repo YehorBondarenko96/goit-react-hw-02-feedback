@@ -1,5 +1,5 @@
 import css from "../Styles.module.css";
-import { Section } from "components/ItemStatistics/Section";
+import { SectionForStatistics } from "components/ItemStatistics/SectionForStatistics";
 import { Notification } from "components/Notification/Notification";
 
 export const Statistics = ({good, neutral, bad, total, positivePercentage}) => {
@@ -7,11 +7,11 @@ export const Statistics = ({good, neutral, bad, total, positivePercentage}) => {
         <div className={css.allP}>
         {total > 0 
             ? <>
-            <Section title="Good" value={good}/>
-            <Section title="Neutral" value={neutral}/>
-            <Section title="Bad" value={bad}/>
-            <Section title="Total" value={total}/>
-            <Section title="Positive feedback" value={`${positivePercentage}%`}/>
+            <SectionForStatistics title="Good" value={good}/>
+            <SectionForStatistics title="Neutral" value={neutral}/>
+            <SectionForStatistics title="Bad" value={bad}/>
+            <SectionForStatistics title="Total" value={total}/>
+            <SectionForStatistics title="Positive feedback" value={`${positivePercentage}%`}/>
             </>
             : <Notification message="No feedback given"/>}
             </div>
